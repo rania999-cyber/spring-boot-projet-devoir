@@ -1,85 +1,63 @@
 package com.example.Controller;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.example.Entity.Book;
-import com.example.Entity.Utilisateur;
+import com.example.Service.BookService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/books")
 public class BookController {
 
-     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private final BookService bookService;
 
-    private String titre;
+    @Autowired
+    public BookController(BookService bookService) {
+        this.bookService = bookService;
+    }
 
-    private String auteur;
-
-     
-    @ManyToOne
-    @JoinColumn(name = "utilisateur_id")
-    private Utilisateur utilisateur;
-
-
+    // Endpoint pour récupérer tous les livres
     @GetMapping
-    public String getAllBooks() {
-        return "List of all books";
+    public ResponseEntity<List<Book>> getAllBooks() {
+        List<Book> books = bookService.getAllBooks();
+        return ResponseEntity.ok(books);
     }
 
+    // Endpoint pour récupérer un livre par son ID
     @GetMapping("/{id}")
-    public String getBookById(@PathVariable Long id) {
-         
-        return "Details for book with ID: " + id;
+    public ResponseEntity<Book> getBookById(@PathVariable Long id) {
+        Book book = bookService.getBookById(id);
+        // Vérifie si le livre existe et renvoie la réponse appropriée
+        return book != null ? ResponseEntity.ok(book) : ResponseEntity.notFound().build();
     }
 
-     
+    // Endpoint pour ajouter un nouveau livre
     @PostMapping
-    public String addBook(@RequestBody Book book) {
-         
-        return "Book added successfully";
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<String> addBook(@RequestBody Book book) {
+        bookService.addBook(book);
+        return ResponseEntity.status(HttpStatus.CREATED).body("Book added successfully");
     }
 
+    // Endpoint pour mettre à jour un livre existant
     @PutMapping("/{id}")
-    public String updateBook(@PathVariable Long id, @RequestBody Book updatedBook) {
-        
-        return "Book with ID " + id + " updated successfully";
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<String> updateBook(@PathVariable Long id, @RequestBody Book updatedBook) {
+        bookService.updateBook(id, updatedBook);
+        return ResponseEntity.ok("Book with ID " + id + " updated successfully");
     }
 
+    // Endpoint pour supprimer un livre par son ID
     @DeleteMapping("/{id}")
-    public String deleteBook(@PathVariable Long id) {
-         
-        return "Book with ID " + id + " deleted successfully";
-    }
-
-
-    public String getTitre() {
-        return titre;
-    }
-
-    public void setTitre(String titre) {
-        this.titre = titre;
-    }
-    public String getAuteur() {
-        return auteur;
-    }
-
-    public void setAuteur(String auteur) {
-        this.auteur = auteur;
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<String> deleteBook(@PathVariable Long id) {
+        bookService.deleteBook(id);
+        return ResponseEntity.ok("Book with ID " + id + " deleted successfully");
     }
 }
+
 

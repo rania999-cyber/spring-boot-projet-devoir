@@ -1,33 +1,41 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <!-- Définition des métadonnées de la page -->
     <meta charset="UTF-8"/>
     <title>Détails de l'Utilisateur</title>
 </head>
 <body>
 
+<!-- Titre principal de la page -->
 <h1>Détails de l'Utilisateur</h1>
 
+<!-- Tableau pour afficher les détails de l'utilisateur -->
 <table border="1">
+    <!-- Ligne pour afficher l'ID de l'utilisateur -->
     <tr>
         <th>ID</th>
         <td th:text="${utilisateur.id}"></td>
     </tr>
+    <!-- Ligne pour afficher le nom de l'utilisateur -->
     <tr>
         <th>Nom</th>
         <td th:text="${utilisateur.nom}"></td>
     </tr>
+    <!-- Ligne pour afficher le prénom de l'utilisateur -->
     <tr>
         <th>Prénom</th>
         <td th:text="${utilisateur.prenom}"></td>
     </tr>
+    <!-- Ligne pour afficher l'adresse de l'utilisateur -->
     <tr>
         <th>Adresse</th>
         <td th:text="${utilisateur.adresse}"></td>
     </tr>
 </table>
 
-<a th:href="@{'/utilisateurs'}">Retour à la liste des utilisateurs</a>
+<!-- Lien pour retourner à la liste des utilisateurs -->
+<a th:href="@{/api/utilisateurs}">Retour à la liste des utilisateurs</a>
 
 </body>
 </html>

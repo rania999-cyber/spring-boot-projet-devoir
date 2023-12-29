@@ -1,17 +1,22 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <!-- Définition des métadonnées de la page -->
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Liste des Livres</title>
- </head>
+</head>
 <body>
 
+<!-- Conteneur principal de la page -->
 <div class="container">
+    <!-- Titre de la page -->
     <h2>Liste des Livres</h2>
 
+    <!-- Tableau pour afficher la liste des livres -->
     <table border="1">
+        <!-- En-tête du tableau -->
         <thead>
             <tr>
                 <th>ID</th>
@@ -21,12 +26,19 @@
                 <th>Publication Date</th>
             </tr>
         </thead>
+        <!-- Corps du tableau -->
         <tbody>
+            <!-- Boucle sur la liste des livres pour afficher chaque livre -->
             <tr th:each="book : ${books}">
+                <!-- Cellule avec l'ID du livre -->
                 <td th:text="${book.id}"></td>
+                <!-- Cellule avec le titre du livre -->
                 <td th:text="${book.title}"></td>
+                <!-- Cellule avec l'auteur du livre -->
                 <td th:text="${book.author}"></td>
+                <!-- Cellule avec le code ISBN du livre -->
                 <td th:text="${book.isbn}"></td>
+                <!-- Cellule avec la date de publication du livre au format 'yyyy-MM-dd' -->
                 <td th:text="${#dates.format(book.publicationDate, 'yyyy-MM-dd')}"></td>
             </tr>
         </tbody>

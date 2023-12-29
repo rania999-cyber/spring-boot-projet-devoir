@@ -7,32 +7,40 @@
 </head>
 <body>
 
+<!-- Titre de la page -->
 <h2>Book Details</h2>
 
+<!-- Tableau pour afficher les détails du livre -->
 <table border="1">
     <tr>
         <th>ID</th>
+        <!-- Affichage de l'ID du livre -->
         <td th:text="${book.id}"></td>
     </tr>
     <tr>
         <th>Title</th>
+        <!-- Affichage du titre du livre -->
         <td th:text="${book.title}"></td>
     </tr>
     <tr>
         <th>Author</th>
+        <!-- Affichage de l'auteur du livre -->
         <td th:text="${book.author}"></td>
     </tr>
     <tr>
         <th>ISBN</th>
+        <!-- Affichage du code ISBN du livre -->
         <td th:text="${book.isbn}"></td>
     </tr>
     <tr>
         <th>Publication Date</th>
+        <!-- Affichage de la date de publication du livre en format 'yyyy-MM-dd' -->
         <td th:text="${#dates.format(book.publicationDate, 'yyyy-MM-dd')}"></td>
     </tr>
 </table>
 
-<a th:href="@{/books}">Back to Book List</a>
+<!-- Lien pour revenir à la liste des livres -->
+<a th:href="@{/api/books}">Back to Book List</a>
 
 </body>
 </html>

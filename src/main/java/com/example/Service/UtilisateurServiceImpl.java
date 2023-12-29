@@ -13,24 +13,29 @@ public class UtilisateurServiceImpl implements UtilisateurService {
     @Autowired
     private UtilisateurRepository utilisateurRepository;
 
+    // Enregistrer un nouvel utilisateur dans la base de données
     @Override
     public Utilisateur enregistrerUtilisateur(Utilisateur utilisateur) {
         return utilisateurRepository.save(utilisateur);
     }
 
+    // Récupérer un utilisateur par son ID
     @Override
     public Utilisateur obtenirUtilisateurParId(Long id) {
         return utilisateurRepository.findById(id).orElse(null);
     }
 
+    // Récupérer la liste de tous les utilisateurs dans la base de données
     @Override
     public List<Utilisateur> obtenirTousLesUtilisateurs() {
         return utilisateurRepository.findAll();
     }
 
+    // Supprimer un utilisateur par son ID
     @Override
     public void supprimerUtilisateur(Long id) {
-         throw new UnsupportedOperationException("Unimplemented method 'supprimerUtilisateur'");
+        utilisateurRepository.deleteById(id);
     }
 }
+
 

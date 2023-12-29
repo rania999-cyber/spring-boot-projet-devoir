@@ -1,9 +1,12 @@
 package com.example.Entity;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Utilisateur {
@@ -14,6 +17,10 @@ public class Utilisateur {
 
     private String nom;
     private String prenom;
+
+    @OneToMany(mappedBy = "utilisateur")
+    private List<Book> livres;
+
     public String getPrenom() {
         return prenom;
     }

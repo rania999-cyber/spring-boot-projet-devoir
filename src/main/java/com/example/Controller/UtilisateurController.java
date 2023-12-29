@@ -1,6 +1,5 @@
 package com.example.Controller;
 
-import com.example.Entity.Book;
 import com.example.Entity.Utilisateur;
 import com.example.Service.UtilisateurService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,50 +7,33 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-
 @RestController
-@RequestMapping("/api/utilisateurs")
+@RequestMapping("/api/utilisateurs") // Définit le chemin de base pour toutes les requêtes dans ce contrôleur
 public class UtilisateurController {
-
-     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    private String nom;
-
-    private String prenom;
-
-    private String adresse;
-
- 
-     
-
-    @OneToMany(mappedBy = "utilisateur")
-    private List<Book> livres;
 
     @Autowired
     private UtilisateurService utilisateurService;
 
+    // Endpoint pour récupérer tous les utilisateurs
     @GetMapping
     public List<Utilisateur> getAllUtilisateurs() {
         return utilisateurService.obtenirTousLesUtilisateurs();
     }
 
+    // Endpoint pour récupérer un utilisateur par son ID
     @GetMapping("/{id}")
     public Utilisateur getUtilisateurById(@PathVariable Long id) {
         return utilisateurService.obtenirUtilisateurParId(id);
     }
 
+    // Endpoint pour ajouter un nouvel utilisateur
     @PostMapping
     public String addUtilisateur(@RequestBody Utilisateur utilisateur) {
         utilisateurService.enregistrerUtilisateur(utilisateur);
         return "Utilisateur ajouté avec succès";
     }
 
+    // Endpoint pour mettre à jour un utilisateur existant
     @PutMapping("/{id}")
     public String updateUtilisateur(@PathVariable Long id, @RequestBody Utilisateur updatedUtilisateur) {
         Utilisateur existingUtilisateur = utilisateurService.obtenirUtilisateurParId(id);
@@ -66,6 +48,7 @@ public class UtilisateurController {
         }
     }
 
+    // Endpoint pour supprimer un utilisateur par son ID
     @DeleteMapping("/{id}")
     public String deleteUtilisateur(@PathVariable Long id) {
         Utilisateur utilisateur = utilisateurService.obtenirUtilisateurParId(id);
@@ -76,29 +59,9 @@ public class UtilisateurController {
             return "Utilisateur avec ID " + id + " non trouvé";
         }
     }
-    
-    public String getNom() {
-        return nom;
-    }
-
-    public void setNom(String nom) {
-        this.nom = nom;
-    }
-    
-    public String getPrenom() {
-        return prenom;
-    }
-
-    public void setPrenom(String prenom) {
-        this.prenom = prenom;
-    }
-    public String getAdresse() {
-        return adresse;
-    }
-
-    public void setAdresse(String adresse) {
-        this.adresse = adresse;
-    }
 }
+
+
+
 
 
